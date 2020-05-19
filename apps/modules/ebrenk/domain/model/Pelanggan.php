@@ -36,4 +36,9 @@ class Pelanggan
     {
         return $this->password_pelanggan;
     }
+
+    public function isExist()
+    {
+        return isset($this->id_pelanggan);
+    }
 }

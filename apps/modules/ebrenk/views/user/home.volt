@@ -1,7 +1,8 @@
 {% extends "template/layout.volt" %}
 {% block navbar %}
-    <a id="layoutA" href="{{ url('ebrenk/user/login') }}">Login</a>
-    <a id="layoutA" href="{{ url('ebrenk/user/daftar') }}">Daftar</a>
+    <a id="layoutA" href="{{ url('ebrenk/user/home') }}">Home</a>
+    <a id="layoutA" href="{{ url('ebrenk/user/riwayat') }}">Riwayat</a>
+    <a id="layoutA" href="{{ url('ebrenk/user/daftar') }}">Logout</a>
 {% endblock %}
 
 {% block content %}
@@ -25,8 +26,14 @@
                         <div style="text-align: left; margin-left: 3%; margin-top: 4%; margin-bottom: 4%;">
                             <h4>{{ produk.getNama() }}</h4>
                             <p>Rp. {{ produk.rupiah() }}</p>
-                            <button class="btn btn-success">Beli</button>
-                            <button class="btn btn-primary">Detail</button>
+                            <form method="POST" action="{{ url('ebrenk/user/beli') }}">
+                                <input type="hidden" name="id_produk" value="{{ produk.getId() }}">
+                                <button class="btn btn-primary">Beli</button>
+                            </form>
+                            <form method="POST" action="{{ url('ebrenk/user/detail') }}">
+                                <input type="hidden" name="id_produk" value="{{ produk.getId() }}">
+                                <button class="btn btn-info">Detail</button>
+                            </form>
                         </div>
                     </div>
                 {% endfor %}

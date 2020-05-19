@@ -57,4 +57,9 @@ class Pembelian
     {
         return $this->resi_pengiriman;
     }
+
+    public function rupiah()
+    {
+        return number_format($this->total_pembelian);
+    }
 }

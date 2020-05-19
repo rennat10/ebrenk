@@ -11,4 +11,5 @@ interface ProdukRepository
     public function update($id_produk, $nama_produk, $harga_produk, $foto_produk, $deskripsi_produk);
     public function tambah($nama_produk, $harga_produk, $foto_produk, $deskripsi_produk);
     public function findById($id_produk):Produk;
+    public function findByName($nama_produk):array;
 }

@@ -8,4 +8,7 @@ interface PelangganRepository
 {
     public function view():array;
     public function hapus($id_pelanggan);
+    public function daftar($email_pelanggan, $password_pelanggan, $nama_pelanggan);
+    public function findByEmailPassword($email_pelanggan, $password_pelanggan):Pelanggan;
+    public function findByPelanggan($id_pelanggan):Pelanggan;
 }

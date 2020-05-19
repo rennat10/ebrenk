@@ -50,4 +50,9 @@ class Produk
     {
         return $this->stok_produk;
     }
+
+    public function rupiah()
+    {
+        return number_format($this->harga_produk);
+    }
 }

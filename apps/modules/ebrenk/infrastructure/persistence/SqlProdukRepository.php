@@ -93,4 +93,31 @@ class SqlProdukRepository implements ProdukRepository
 
         return $produk;
     }
+
+    public function findByName($nama_produk):array
+    {
+        $sql = "SELECT * FROM Produk 
+                WHERE nama_produk LIKE :nama_produk ";
+
+        $result = $this->db->fetchAll($sql, \Phalcon\Db::FETCH_ASSOC, [
+            'nama_produk' => $nama_produk
+        ]);
+
+        $resultArray = array();
+        foreach($result as $row)
+        {
+            $produk = new Produk(
+                $row['id_produk'],
+                $row['nama_produk'],
+                $row['harga_produk'],
+                $row['foto_produk'],
+                $row['deskripsi_produk'],
+                $row['stok_produk']
+            );
+
+            array_push($resultArray, $produk);
+        }
+
+        return $resultArray;
+    }
 }
