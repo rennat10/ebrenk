@@ -29,9 +29,8 @@
                         <td>
                             <button class="btn btn-info">Nota</button>
                             <button class="btn btn-success">Pembayaran</button>
-                            
                         </td>
-                    </tr>   
+                    </tr>
                     {% set nomor = nomor + 1 %}
                 {% endfor %}
             </tbody>
