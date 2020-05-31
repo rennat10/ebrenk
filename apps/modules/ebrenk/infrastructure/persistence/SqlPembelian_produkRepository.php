@@ -29,4 +29,15 @@ class SqlPembelian_produkRepository implements Pembelian_produkRepository
 
         return $resultArray;
     }
+
+    public function add($id_pembelian, $id_produk, $jumlah)
+    {
+        $sql = "INSERT INTO Pembelian_produk(id_pembelian, id_produk, jumlah) VALUES(:id_pembelian, :id_produk, :jumlah)";
+
+        $this->db->query($sql, [
+            'id_pembelian' => $id_pembelian,
+            'id_produk' => $id_produk,
+            'jumlah' => $jumlah
+        ]);
+    }
 }

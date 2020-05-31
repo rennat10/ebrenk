@@ -21,19 +21,16 @@
             <h2 style="color: green;">Produk Terbaru</h2>
             <div class="d-flex" style="flex-wrap: wrap; margin-left: 1%;">
                 {% for produk in produkList %}
-                    <div style="width: 32%; margin-top: 3%; border: 1px solid gray; margin-left: 1%;">
+                    <div style="width: 32%; margin-top: 3%; border: 1px solid gray; margin-left: 1%;" >
                         <img class="mx-auto" src="{{ url(produk.getFoto()) }}" style="width: 400px; height: 300px;">
                         <div style="text-align: left; margin-left: 3%; margin-top: 4%; margin-bottom: 4%;">
                             <h4>{{ produk.getNama() }}</h4>
                             <p>Rp. {{ produk.rupiah() }}</p>
                             <form method="POST" action="{{ url('ebrenk/user/beli') }}">
                                 <input type="hidden" name="id_produk" value="{{ produk.getId() }}">
-                                <button class="btn btn-primary">Beli</button>
+                                <button class="btn btn-primary" {% if produk.getStok() <= 0 %} disabled {% endif %}>Beli</button>
                             </form>
-                            <form method="POST" action="{{ url('ebrenk/user/detail') }}">
-                                <input type="hidden" name="id_produk" value="{{ produk.getId() }}">
-                                <button class="btn btn-info">Detail</button>
-                            </form>
+                            <a class="btn btn-info" href="{{ url('ebrenk/user/detail/' ~ produk.getId() ) }}" {% if produk.getStok() <= 0 %} style="pointer-events:none; opacity: 0.7" {% endif %}>Detail</a>
                         </div>
                     </div>
                 {% endfor %}

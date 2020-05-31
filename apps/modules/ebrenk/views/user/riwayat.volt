@@ -15,24 +15,16 @@
                     <td>Tanggal</td>
                     <td>Status</td>
                     <td>Total</td>
-                    <td>Opsi</td>
                 </tr>
             </thead>
             <tbody>
-                {% set nomor = 1 %}
                 {% for riwayat in riwayatBelanja %}
                     <tr>
-                        <td>{{ nomor }}</td>
+                        <td>{{ loop.index }}.</td>
                         <td>{{ riwayat.getTanggal() }}</td>
                         <td>{{ riwayat.getStatus() }}</td>
                         <td>Rp. {{ riwayat.rupiah() }}</td>
-                        <td>
-                            <button class="btn btn-info">Nota</button>
-                            <button class="btn btn-success">Pembayaran</button>
-                        </td>
                     </tr> 
-                    
-                    {% set nomor = nomor + 1 %}
                 {% endfor %}
             </tbody>
         </table>

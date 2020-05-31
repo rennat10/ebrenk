@@ -25,6 +25,10 @@ use Ebrenk\Application\RiwayatBelanja\RiwayatBelanjaService;
 use Ebrenk\Application\CariProduk\CariProdukService;
 use Ebrenk\Application\TambahKeranjang\TambahKeranjangService;
 use Ebrenk\Application\ViewKeranjang\ViewKeranjangService;
+use Ebrenk\Application\HapusKeranjang\HapusKeranjangService;
+use Ebrenk\Application\HapusKeranjangByPelanggan\HapusKeranjangByPelangganService;
+use Ebrenk\Application\TambahPembelian\TambahPembelianService;
+use Ebrenk\Application\TambahPembelianProduk\TambahPembelianProdukService;
 use Phalcon\Mvc\View;
 
 $di['view'] = function () {
@@ -151,4 +155,20 @@ $di->setShared('tambahKeranjangService', function() use($di) {
 
 $di->setShared('viewKeranjangService', function() use($di) {
     return new ViewKeranjangService($di->get('sqlKeranjangRepository'));
+});
+
+$di->setShared('hapusKeranjangService', function() use ($di) {
+    return new HapusKeranjangService($di->get('sqlKeranjangRepository'));
+});
+
+$di->setShared('hapusKeranjangByPelangganService', function() use($di) {
+    return new HapusKeranjangByPelangganService($di->get('sqlKeranjangRepository'));
+});
+
+$di->setShared('tambahPembelianService', function() use ($di) {
+    return new TambahPembelianService($di->get('sqlPembelianRepository'));
+});
+
+$di->setShared('tambahPembelianProdukService', function() use ($di) {
+    return new TambahPembelianProdukService($di->get('sqlPembelian_produkRepository'));
 });

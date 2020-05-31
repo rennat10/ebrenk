@@ -28,20 +28,54 @@ class SqlKeranjangRepository implements KeranjangRepository
 
         foreach($result as $row)
         {
-            array_push($resultArray, $row);
+            $keranjang = new Keranjang($row['id_produk'], $id_pelanggan, $row['nama_produk'], $row['jumlah'], $row['stok_produk'], $row['harga_produk'], $row['harga_produk'] * $row['jumlah']);
+            array_push($resultArray, $keranjang);
         }
 
         return $resultArray;
     }
 
-    public function add($id_produk, $id_pelanggan)
+    public function add($id_produk, $id_pelanggan, $jumlah)
     {
-        $sql = "INSERT INTO Keranjang(id_produk, id_pelanggan) VALUES (:id_produk, :id_pelanggan)";
-
-        $this->db->query($sql, [
+        $firstSql = "SELECT * FROM Keranjang WHERE id_produk = :id_produk and id_pelanggan = :id_pelanggan";
+        $result = $this->db->fetchOne($firstSql, \Phalcon\Db::FETCH_ASSOC, [
             'id_produk' => $id_produk,
             'id_pelanggan' => $id_pelanggan
         ]);
+
+        if($result)
+        {
+            $sql = "UPDATE Keranjang
+                    SET jumlah = :jumlah
+                    WHERE id_produk = :id_produk and id_pelanggan = :id_pelanggan";
+            
+            $sqlProduk = "SELECT * FROM Produk WHERE id_produk = :id_produk";
+            $resultProduk = $this->db->fetchOne($sqlProduk, \Phalcon\Db::FETCH_ASSOC, [
+                'id_produk' => $id_produk
+            ]);
+            
+            $jumlahBeli = $result['jumlah'] + $jumlah;
+            if($jumlahBeli > $resultProduk['stok_produk'])
+            {
+                $jumlahBeli = $resultProduk['stok_produk'];
+            }
+            
+            $this->db->query($sql, [
+                'jumlah' => $jumlahBeli,
+                'id_produk' => $id_produk,
+                'id_pelanggan' => $id_pelanggan
+            ]);
+        }
+        else 
+        {
+            $sql = "INSERT INTO Keranjang(id_produk, id_pelanggan, jumlah) VALUES (:id_produk, :id_pelanggan, :jumlah)";
+
+            $this->db->query($sql, [
+                'id_produk' => $id_produk,
+                'id_pelanggan' => $id_pelanggan,
+                'jumlah' => $jumlah
+            ]);
+        }        
     }
 
     public function hapus($id_produk, $id_pelanggan)
@@ -50,6 +84,15 @@ class SqlKeranjangRepository implements KeranjangRepository
         
         $this->db->query($sql, [
             'id_produk' => $id_produk,
+            'id_pelanggan' => $id_pelanggan
+        ]);
+    }
+
+    public function hapusKeranjang($id_pelanggan)
+    {
+        $sql = "DELETE FROM Keranjang WHERE id_pelanggan = :id_pelanggan";
+
+        $this->db->query($sql, [
             'id_pelanggan' => $id_pelanggan
         ]);
     }

@@ -62,4 +62,15 @@ class SqlPembelianRepository implements PembelianRepository
 
         return $resultArray;
     }
+
+    public function add($id_pelanggan, $tanggal_pembelian, $total_pembelian)
+    {
+        $sql = "INSERT INTO Pembelian(id_pelanggan, tanggal_pembelian, total_pembelian) VALUES(:id_pelanggan, :tanggal_pembelian, :total_pembelian)";
+
+        $this->db->query($sql, [
+            'id_pelanggan' => $id_pelanggan,
+            'tanggal_pembelian' => $tanggal_pembelian,
+            'total_pembelian' => $total_pembelian
+        ]);
+    }
 }

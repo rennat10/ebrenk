@@ -1,9 +1,10 @@
 <?php
 
-namespace Ebrenk\Application\TambahKeranjang;
+namespace Ebrenk\Application\HapusKeranjang;
+
 use Ebrenk\Domain\Repository\KeranjangRepository;
 
-class TambahKeranjangService
+class HapusKeranjangService
 {
     protected $keranjangRepository;
 
@@ -12,8 +13,8 @@ class TambahKeranjangService
         $this->keranjangRepository = $keranjangRepository;
     }
 
-    public function execute($id_produk, $id_pelanggan, $jumlah)
+    public function execute($id_produk, $id_pelanggan)
     {
-        $this->keranjangRepository->add($id_produk, $id_pelanggan, $jumlah);
+        $this->keranjangRepository->hapus($id_produk, $id_pelanggan);
     }
 }

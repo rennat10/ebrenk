@@ -7,25 +7,39 @@
 
 {% block content %}
     <div class="container mt-5">
-        <table class="table table-bordered mx-auto" style="width: 95%;">
+        <table class="table table-bordered mx-auto">
             <thead>
                 <tr>
                     <td>No</td>
                     <td>Nama</td>
                     <td>Harga</td>
+                    <td>Jumlah</td>
+                    <td>Total harga</td>
+                    <td>Aksi</td>
                 </tr>
             </thead>
             <tbody>
-                {% set nomor = 1 %}
                 {% for keranjang in keranjangList %}
                     <tr>
-                        <td>{{ nomor }}</td>
-                        <td>{{ keranjang['nama_produk'] }}</td>
-                        <td>{{ keranjang['harga_produk'] }}</td>
+                        <td>{{ loop.index }}.</td>
+                        <td>{{ keranjang.getNama() }}</td>
+                        <td>Rp. {{ keranjang.getHarga() }}</td>
+                        <td>{{ keranjang.getJumlah() }}</td>
+                        <td>Rp. {{ keranjang.getTotal() }}</td>
+                        <td>
+                            <a class="btn btn-danger" href="{{ url('ebrenk/user/deleteCheckout/' ~ keranjang.getIdProduk()) }}">Hapus</a>
+                        </td>
                     </tr>
-                {% set nomor = nomor + 1 %}
                 {% endfor %}
+                <tr>
+                    <td colspan="4">Total</td>
+                    <td>Rp. {{ totalBeli }}</td>
+                </tr>
             </tbody>
         </table>
+        <form method="POST" action="{{ url('ebrenk/user/masukRiwayat') }}">
+            <input type="hidden" value="{{ totalBeli }}" name="total">
+            <button class="btn btn-primary">Checkout</button>
+        </form>
     </div>
 {% endblock %}
